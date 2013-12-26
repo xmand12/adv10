@@ -1,0 +1,20 @@
+#BlueJ package file
+package.editor.height=333
+package.editor.width=193
+package.editor.x=380
+package.editor.y=80
+package.numDependencies=0
+package.numTargets=1
+package.showExtends=true
+package.showUses=false
+target1.editor.height=700
+target1.editor.width=900
+target1.editor.x=0
+target1.editor.y=0
+target1.height=50
+target1.name=DataPkg
+target1.showInterface=false
+target1.type=ClassTarget
+target1.width=80
+target1.x=70
+target1.y=90

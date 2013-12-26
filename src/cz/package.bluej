@@ -1,0 +1,19 @@
+#BlueJ package file
+package.editor.height=287
+package.editor.width=193
+package.editor.x=320
+package.editor.y=20
+package.numDependencies=0
+package.numTargets=1
+package.showExtends=true
+package.showUses=false
+readme.editor.height=640
+readme.editor.width=640
+readme.editor.x=0
+readme.editor.y=0
+target1.height=62
+target1.name=vse
+target1.type=PackageTarget
+target1.width=80
+target1.x=70
+target1.y=90
