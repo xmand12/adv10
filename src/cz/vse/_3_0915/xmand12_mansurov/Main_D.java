@@ -235,16 +235,19 @@ public class Main_D
 
         @Override
         public String askCommand(String message) {
+            IO.setDialogsPosition(500, 250);
             return IO.enter(message, "");
         }
 
         @Override
         public void sendMessage(String message) {
+            IO.setDialogsPosition(500, 250);
             IO.inform(message);
         }
 
         @Override
         public boolean wantContinue() {
+            IO.setDialogsPosition(500, 250);
             return IO.confirm("Chcete si zahrát ještě jednou?");
         }
     }

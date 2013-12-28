@@ -50,8 +50,8 @@ public class CommandGo extends ACommand
             answer = "Přestunul jste se do: "
                     + destination.getName().toLowerCase();
 
-            if ((destination.getName().equalsIgnoreCase("džungle")) && (!QuestManager.getInstance().isFirstDzungle())) {
-                QuestManager.getInstance().setFirstDzungle(true);
+            if ((destination.getName().equalsIgnoreCase("džungle")) && (!QuestManager.getStateOf("frstDzungle"))) {
+                QuestManager.setStateTo("frstDzungle", true);
                 answer += ".\nNěkdo k vám podešel a dal rozkaz\n"
                         + ", abyste mu předal(a) všechno, co máte.";
             }

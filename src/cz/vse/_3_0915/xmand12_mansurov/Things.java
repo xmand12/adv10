@@ -1,6 +1,7 @@
 package cz.vse._3_0915.xmand12_mansurov;
 
 import cz.vse.adv_framework.game_txt.IObject;
+import java.io.Serializable;
 
 /*******************************************************************************
  * Instance třídy {@code EmptyThing} přestavují objekty v místnostech.
@@ -20,7 +21,7 @@ import cz.vse.adv_framework.game_txt.IObject;
  * @author    Daulet Mansurov
  * @version   7.4
  */
-public class Things implements IObject
+public class Things implements IObject, Serializable
 {
 
 //== CONSTANT INSTANCE ATTRIBUTES ==============================================

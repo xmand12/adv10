@@ -34,6 +34,21 @@ public class Game implements IGame
 
     /** Odkaz na jedinou instanci (jedináčka) této hry. */
     private static final Game GAME = new Game();
+/**
+ * Staticka promenna načítající již uloženou hru .
+ * @param gameData
+ */
+    static void loadGame(GameData gameData) {
+        Bag actBag = Bag.getInstance();
+        Bag oldBag = gameData.getBag();
+        actBag.removeAllObject();
+        for (Things thing : oldBag.getObjects()) {
+            actBag.putInto(thing);
+        }
+        QuestManager.loadQmMapFrom(gameData.getQm());
+        Rooms.loadRoomsFrom(gameData.getALL_ROOMS());
+        Rooms.getCurrentPlace().setCurrentPlace(gameData.getCurrRoom());
+    }
 
 //== VARIABLE INSTANCE ATTRIBUTES ==============================================
 

@@ -53,7 +53,7 @@ public class CommandUse extends ACommand
             }
         } else if (item.getName().equalsIgnoreCase("klíč")) {
             if (isInRoom("Truhlice")) {
-                QuestManager.getInstance().setUnlockedChest(true);
+                QuestManager.setStateTo("unlockedChest", true);
                 Bag.getInstance().removeObject(item);
                 answer = "Použil jste klíč a odemknul jste truhlice.";
             }

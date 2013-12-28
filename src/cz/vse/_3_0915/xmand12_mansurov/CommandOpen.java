@@ -34,7 +34,7 @@ public class CommandOpen extends ACommand
         } else {
             if (isInRoom(arguments[1])) {
                 if (arguments[1].equalsIgnoreCase("Truhlice")) {
-                    if (QuestManager.getInstance().isUnlockedChest()) {
+                    if (QuestManager.getStateOf("unlockedChest")) {
                         for (Rooms room : Rooms.getAllPlaces()) {
                             if (room.getName().equalsIgnoreCase("Truhlice")) {
                                 Rooms.getCurrentPlace().setCurrentPlace(room);

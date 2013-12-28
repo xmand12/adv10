@@ -35,11 +35,17 @@ public class CommandTalk extends ACommand
             Rooms room = Rooms.getCurrentPlace();
             ListINamed<Things> roomObjects = room.getObjects();
             Things person = roomObjects.getINamed(arguments[1]);
-            if (person.isAlive()) {
-                if (person.getName().equalsIgnoreCase("gubernátor")) {
-                    answer = talkToGubernator();
-                } else if (person.getName().equalsIgnoreCase("prodavač")) {
-                    answer = talkToSaler();
+            if (person == null) {
+                answer = "Taková osoba tady není!";
+            } else {
+                if (person.isAlive()) {
+                    if (person.getName().equalsIgnoreCase("gubernátor")) {
+                        answer = talkToGubernator();
+                    } else if (person.getName().equalsIgnoreCase("prodavač")) {
+                        answer = talkToSaler();
+                    } else{
+                        answer = "Popovídali jste si chvílku, ale nic zajímávého jste se nedozvěděl!";
+                    }
                 }
             }
         }
@@ -48,18 +54,18 @@ public class CommandTalk extends ACommand
 
     private String talkToSaler() {
         String answer;
-        if (QuestManager.getInstance().isBuyBoat()) {
+        if (QuestManager.getStateOf("buyBoat")) {
             answer = "Prodavač už níc nemůže vám nabídout";
         } else {
-            if (QuestManager.getInstance().isFrstDlgWthSlr()) {
+            if (QuestManager.getStateOf("frstDlgWthSlr")) {
                 answer = "Prodavač se vám usmal a zeptal se, jestli jste už nasbíral ty peníze";
             } else {
-                QuestManager.getInstance().setFrstDlgWthSlr(true);
+                QuestManager.setStateTo("frstDlgWthSlr", true);
                 answer = "Zeptal jste prodavači, kolik stojí loď. Prodavač odpověděl,\n"
                         + "že loď stojí 10000 pesso.";
             }
             if (haveMoney()) {
-                QuestManager.getInstance().setBuyBoat(true);
+                QuestManager.setStateTo("buyBoat", true);
                 answer += " Koupil jste si loď.";
                 for (Things object : Bag.getInstance().getObjects()) {
                     if (object.getName().equalsIgnoreCase("10000")) {
@@ -87,18 +93,23 @@ public class CommandTalk extends ACommand
 
     private String talkToGubernator() {
         String answer = "";
-        if (QuestManager.getInstance().isFrstDlgWthGbr()) {
+        if (QuestManager.getStateOf("frstDlgWthGbr")) {
             Rooms currRoom = Rooms.getCurrentPlace();
             for (Things object : currRoom.getObjects()) {
                 if (object.getName().equalsIgnoreCase("vrah")) {
+                    if (Rooms.getCurrentPlace().getName().equalsIgnoreCase("10000")) {
+
                     answer = "Gubernátor poděkoval vám a řekl,že vaše odměna na vás už"
-                            + "\ndávno čeká na jeho stole, a že teď můžete ji vzít.";
+                            + "\ndávno čeká na jeho stole, a že teď můžete ji vzít.";}
+                    else{
+                        answer = "Nemám na Vás čas.Přijděte později";
+                    }
                 } else {
                     answer = "Přiďte, když budete mít nějaké důkazy.";
                 }
             }
         } else {
-            QuestManager.getInstance().setFrstDlgWthGbr(true);
+            QuestManager.setStateTo("frstDlgWthGbr", true);
             answer  = "Zeptal jste gubernátora, nemá-li nějaké zadání. Gubernátor řekl,\n"
                     + "že se ve džunglích vyskituje vrah, který terorizuje lidé.\n"
                     + " Rǐkáte, že zabil jste ho. Ale gubernátor tomu neveří.\n"

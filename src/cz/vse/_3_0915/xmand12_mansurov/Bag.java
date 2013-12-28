@@ -1,6 +1,7 @@
 package cz.vse._3_0915.xmand12_mansurov;
 
 import cz.vse.adv_framework.game_txt.IBag;
+import java.io.Serializable;
 
 /*******************************************************************************
  * Instance třídy {@code Bag} představuje úložiště, do nichž si hráči
@@ -9,7 +10,7 @@ import cz.vse.adv_framework.game_txt.IBag;
  * @author  Daulet MANSUROV
  * @version 7.4
  */
-public class Bag implements IBag
+public class Bag implements IBag, Serializable
 {
 //== CONSTANT CLASS ATTRIBUTES =================================================
 

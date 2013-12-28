@@ -1,16 +1,17 @@
 package cz.vse._3_0915.xmand12_mansurov;
 
 import cz.vse.adv_framework.game_txt.IPlace;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /*******************************************************************************
- * Instance třídy {@literal Rooms} představují prostory v demonstrační hře.
+ * Instance třídy {@literal Rooms} představují prostory v hře.
  *
  * @author  Daulet Mansurov
  * @version 7.4
  */
-public class Rooms implements IPlace
+public class Rooms implements IPlace, Serializable
 {
 //== CONSTANT CLASS ATTRIBUTES =================================================
 
@@ -147,15 +148,9 @@ public class Rooms implements IPlace
         currentPlace = JESKYNĚ;
     }
 
-    /***************************************************************************
-     * Uvede všechny prostory  do počátečního stavu vyžadovaného na počátku hry
-     * a současně nastaví výchozí prostor, v němž je hráč na počátku hry.
-     */
-    static void restartInitialize()
-
-    {
-        for (Rooms room : ALL_ROOMS) {
-            room.initializeYourself();
+    public static void loadRoomsFrom(Map<String, Rooms> newRoomsMap) {
+        for (String key : NAME_2_ROOM.keySet()) {
+            NAME_2_ROOM.put(key, newRoomsMap.get(key));
         }
     }
 
@@ -225,6 +220,10 @@ public class Rooms implements IPlace
         return objects;
     }
 
+    /**
+     * Metoda odtranujici predmet z aktualniho prostoru
+     * @param thingToRemove
+     */
     public void removeObject(Things thingToRemove){
         objects.remove(thingToRemove);
     }
@@ -248,8 +247,9 @@ public class Rooms implements IPlace
         }
     }
 
-//== TESTING CLASSES AND METHODS ===============================================
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return getName();

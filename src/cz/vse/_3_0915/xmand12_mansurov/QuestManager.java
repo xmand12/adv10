@@ -1,6 +1,10 @@
 
 package cz.vse._3_0915.xmand12_mansurov;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 /*******************************************************************************
@@ -9,166 +13,104 @@ package cz.vse._3_0915.xmand12_mansurov;
  * @author  Daulet MANSUROV
  * @version 7.4
  */
-public class QuestManager
+public class QuestManager implements Serializable
 {
 //== CONSTANT CLASS ATTRIBUTES =================================================
 /** Odkaz na jedinou instanci (jedináčka) této hry. */
-private static final QuestManager QUESTMANAGER = new QuestManager();
 
-//== VARIABLE CLASS ATTRIBUTES =================================================
-//== STATIC INITIALIZER (CLASS CONSTRUCTOR) ====================================
-//== CONSTANT INSTANCE ATTRIBUTES ==============================================
+/** Mapa sdružující Aktualni stav vsech zadani. */
+private static final Map<String, QuestManager> qmMap = new HashMap<>();
+/*Staticka konstanta reprezentujici stav ulohy: "zabij vraha" */
+private static final QuestManager killKiller    = new QuestManager("killKiller", false);
+/*Staticka konstanta reprezentujici stav ulohy: "poprve v dzunglich" */
+private static final QuestManager firstDzungle  = new QuestManager("frstDzungle", false);
+/*Staticka konstanta reprezentujici stav ulohy: "prvni dialog s gubernatorem" */
+private static final QuestManager frstDlgWthGbr = new QuestManager("frstDlgWthGbr", false);
+/*Staticka konstanta reprezentujici stav ulohy: "prvni dialog s prodavacem" */
+private static final QuestManager frstDlgWthSlr = new QuestManager("frstDlgWthSlr", false);
+/*Staticka konstanta reprezentujici stav ulohy: "kupovani lodi" */
+private static final QuestManager buyBoat       = new QuestManager("buyBoat", false);
+/*Staticka konstanta reprezentujici stav ulohy: "odemkni truhlici" */
+private static final QuestManager unlockedChest = new QuestManager("unlockedChest", false);
+
 //== VARIABLE INSTANCE ATTRIBUTES ==============================================
 
-/*Staticka promenna reprezentujici stav ulohy: "zabij vraha" */
-private static boolean killKiller = false;
-/*Staticka promenna reprezentujici stav ulohy: "poprve v dzunglich" */
-private static boolean firstDzungle = false;
-/*Staticka promenna reprezentujici stav ulohy: "prvni dialog s gubernatorem" */
-private static boolean frstDlgWthGbr = false;
-/*Staticka promenna reprezentujici stav ulohy: "prvni dialog s prodavacem" */
-private static boolean frstDlgWthSlr = false;
-/*Staticka promenna reprezentujici stav ulohy: "kupovani lodi" */
-private static boolean buyBoat = false;
-/*Staticka promenna reprezentujici stav ulohy: "odemkni truhlici" */
-private static boolean unlockedChest = false;
+private final String name;
+private boolean state;
 
 //##############################################################################
 //== CONSTUCTORS AND FACTORY METHODS ===========================================
-
-    /**
-     * Tovární metoda vracející odkaz na jedninou existující instanci dané hry.
-     *
-     * @return Instance dané hry
-     */
-    public static QuestManager getInstance()
-    {
-        return QUESTMANAGER;
-    }
 
     /***************************************************************************
      * Soukromý konstruktor definující jedinou instanci.
      * Protože je soukromý, musí být definován, i když má prázdné tělo.
      */
-    private  QuestManager()
+    private  QuestManager(String name, boolean state)
     {
+        this.name = name;
+        this.state = state;
+
+        qmMap.put(this.name, this);
     }
 
 //== INSTANCE GETTERS AND SETTERS ==============================================
 
-    /**
-     * Metoda vracejici aktualni stav ulohy: "zabij vraha".
+    /***************************************************************************
+     * Vrati aktualni stav daneho zadani
      *
-     * @return vraci {@code true} pokud uloha je splnena,
-     *         jinak vraci{@code false}
+     * @return {@code  true} pokud splneno,
+     * jinak {@code false}
      */
-    public boolean isKillKiller() {
-        return killKiller;
+    private boolean getState() {
+        return this.state;
     }
 
-    /**
-     * Metoda zmeni stav ulohy na stav zadany v parametru
-     *
-     * @param state zadany stav
+    /***************************************************************************
+     * Nastavi aktualni stav pro dane zadani
      */
-    public void setKillKiller(boolean state) {
-        this.killKiller = state;
+    private void setState(boolean newState) {
+        this.state = newState;
     }
 
-    /**
-     * Metoda vracejici aktualni stav ulohy: "poprve v dzunglich".
+    /***************************************************************************
+     * Vrati aktualni stav vsech zadani
      *
-     * @return vraci {@code true} pokud uloha je splnena,
-     *         jinak vraci{@code false}
+     * @return aktualni stav vsech zadani
      */
-    public boolean isFirstDzungle() {
-        return firstDzungle;
+    public static Map<String, QuestManager> getQmMap() {
+        return qmMap;
     }
 
-    /**
-     * Metoda zmeni stav ulohy na stav zadany v parametru
+    /***************************************************************************
+     * Vrati booleanovskou hodnotu reprezentujici stav daneho zadani
      *
-     * @param state zadany stav
+     * @param questName klic k danemu zadani
+     * @return {@code true} pokud splneno, jinak {@code false}
      */
-    public void setFirstDzungle(boolean state) {
-        this.firstDzungle = state;
+    public static boolean getStateOf(String questName) {
+       return qmMap.get(questName).getState();
     }
 
-    /**
-     * Metoda vracejici aktualni stav ulohy: "prvni dialog s gubernatorem".
+    /***************************************************************************
+     * Nastaveni booleanovske hodnoty pomoci klice
      *
-     * @return vraci {@code true} pokud uloha je splnena,
-     *         jinak vraci{@code false}
+     * @param questName klic k danemu zadani
+     * @param newState stav daneho zadani
+     * @return {@code true} pokud splneno, jinak {@code false}
      */
-    public boolean isFrstDlgWthGbr() {
-        return frstDlgWthGbr;
+    public static void setStateTo(String questName, boolean newState) {
+        qmMap.get(questName).setState(newState);
     }
 
-    /**
-     * Metoda zmeni stav ulohy na stav zadany v parametru
+    /***************************************************************************
+     * Aktualizuje stavy hodnot z dane mapu na stavy hodnot mapy, zadane jako parametr
      *
-     * @param state zadany stav
+     * @param newQmMap Mapa, zadana jako parametr.
      */
-    public void setFrstDlgWthGbr(boolean state) {
-        this.frstDlgWthGbr = state;
-    }
-
-    /**
-     * Metoda vracejici aktualni stav ulohy: "prvni dialog s prodavacem".
-     *
-     * @return vraci {@code true} pokud uloha je splnena,
-     *         jinak vraci{@code false}
-     */
-    public boolean isFrstDlgWthSlr()
-    {
-        return frstDlgWthSlr;
-    }
-
-    /**
-     * Metoda zmeni stav ulohy na stav zadany v parametru
-     *
-     * @param state zadany stav
-     */
-    public void setFrstDlgWthSlr(boolean state) {
-        this.frstDlgWthSlr = state;
-    }
-
-    /**
-     * Metoda vracejici aktualni stav ulohy: "kupovani lodi".
-     *
-     * @return vraci {@code true} pokud uloha je splnena,
-     *         jinak vraci{@code false}
-     */
-    public boolean isBuyBoat() {
-        return buyBoat;
-    }
-
-    /**
-     * Metoda zmeni stav ulohy na stav zadany v parametru
-     *
-     * @param state zadany stav
-     */
-    public void setBuyBoat(boolean state) {
-        this.buyBoat = state;
-    }
-
-    /**
-     * Metoda vracejici aktualni stav ulohy: "odemknout truhlici".
-     *
-     * @return vraci {@code true} pokud uloha je splnena,
-     *         jinak vraci{@code false}
-     */
-    public boolean isUnlockedChest() {
-        return unlockedChest;
-    }
-
-    /**
-     * Metoda zmeni stav ulohy na stav zadany v parametru
-     *
-     * @param state zadany stav
-     */
-    public void setUnlockedChest(boolean state) {
-        this.unlockedChest = state;
+    public static void loadQmMapFrom(Map<String, QuestManager> newQmMap) {
+        for (String key : qmMap.keySet()) {
+            qmMap.get(key).setState(newQmMap.get(key).getState());
+        }
     }
 
     /**
@@ -176,12 +118,9 @@ private static boolean unlockedChest = false;
      *
      */
     public static void initialize(){
-        frstDlgWthGbr = false;
-        frstDlgWthSlr = false;
-        killKiller = false;
-        unlockedChest = false;
-        buyBoat = false;
-        firstDzungle = false;
+        for (String key : qmMap.keySet()) {
+            qmMap.get(key).setState(false);
+        }
     }
 
 }

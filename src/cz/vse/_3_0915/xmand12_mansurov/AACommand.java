@@ -37,6 +37,8 @@ abstract class AACommand implements ICommand
         new CommandOpen();
         new CommandClose();
         new CommandRead();
+        new CommandSave();
+        new CommandLoad();
     }
 
 //== CLASS GETTERS AND SETTERS =================================================
