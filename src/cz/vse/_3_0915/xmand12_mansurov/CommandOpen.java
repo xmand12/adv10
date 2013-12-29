@@ -30,7 +30,7 @@ public class CommandOpen extends ACommand
     public String execute(String... arguments) {
         String answer = "";
         if (arguments.length < 2) {
-            answer += "Nebyl zadán předmět,který se má otevřit.";
+            answer = "Nebyl zadán předmět,který se má otevřit.";
         } else {
             if (isInRoom(arguments[1])) {
                 if (arguments[1].equalsIgnoreCase("Truhlice")) {
@@ -38,19 +38,19 @@ public class CommandOpen extends ACommand
                         for (Rooms room : Rooms.getAllPlaces()) {
                             if (room.getName().equalsIgnoreCase("Truhlice")) {
                                 Rooms.getCurrentPlace().setCurrentPlace(room);
-                                answer += "Otevřel jste truhlici"
+                                answer = "Otevřel jste truhlici"
                                         + " a teď máte přistup k jejimu obsahu";
                                 break;
                             }
                         }
                     } else {
-                        answer += "Truhlice je zamčená. Musíte ji nejdřív odemknout.";
+                        answer = "Truhlice je zamčená. Musíte ji nejdřív odemknout.";
                     }
                 } else {
-                    answer += "Tento předmět není zamčen. Není třeba ho odemíkat.";
+                    answer = "Tento předmět není zamčen. Není třeba ho odemíkat.";
                 }
             } else {
-                answer += "Takový předmět tady není.";
+                answer = "Takový předmět tady není.";
             }
         }
         return answer;

@@ -41,6 +41,14 @@ public class CommandUse extends ACommand
         return answer;
     }
 
+    /**
+     * Metoda vrati odpoved na dany prikaz v zavislosti na nekolika kriteriich:
+     * jestli nachazite v mistnosti "vodopad"
+     * jestli pouzivate predmet "lopata"
+     * jestli pouzivate predmet "klic"
+     * @param item predmet, ktery pouzivate
+     * @return odpoved na dany prikaz
+     */
     private String use(Things item) {
         String answer = "";
         if (item.getName().equalsIgnoreCase("lopata")) {

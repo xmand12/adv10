@@ -29,19 +29,19 @@ public class CommandRead extends ACommand
      */
     @Override
     public String execute(String... arguments) {
-        String answer = "";
+        String answer;
         if (arguments.length < 2) {
-            answer += "Nebyl zadán předmět,který se má zavřit.";
+            answer = "Nebyl zadán předmět,který se má zavřit.";
         } else {
             if (isInBag(arguments[1])) {
                 if (arguments[1].equalsIgnoreCase("Deník")) {
-                    answer += "Přečetl jste deník. V deníku je napsano,"
+                    answer = "Přečetl jste deník. V deníku je napsano,"
                             + " jak se můžete dostat k pramenu večného mládí.";
                 } else {
-                    answer += "Tento předmět se přečíst nedá.";
+                    answer = "Tento předmět se přečíst nedá.";
                 }
             } else {
-                answer += "Takový předmět není v batohu.";
+                answer = "Takový předmět není v batohu.";
             }
         }
         return answer;

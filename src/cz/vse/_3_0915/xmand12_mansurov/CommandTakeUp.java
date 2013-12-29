@@ -35,7 +35,7 @@ class CommandTakeUp extends ACommand
         if (arguments.length < 2) {
             answer = "Nebyl zadán objekt, který se má zvednout.";
         } else {
-            Things item = isInRoom(arguments[1]);
+            final Things item = isInRoom(arguments[1]);
             if (item == null) {
                 answer = "Takový předmět tady není.";
             } else {

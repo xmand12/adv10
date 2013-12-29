@@ -26,20 +26,20 @@ public class CommandPutDown extends ACommand
 
     @Override
     public String execute(String... arguments) {
-        String answer = "";
+        String answer;
         if (arguments.length < 2) {
-            answer += "Nebyl zadán objekt, který se má položit.";
+            answer = "Nebyl zadán objekt, který se má položit.";
         }else {
-            Bag bag = Bag.getInstance();
-            Rooms room = Rooms.getCurrentPlace();
-            ListINamed<Things> bagObjects = bag.getObjects();
-            Things putDowm = bagObjects.getINamed(arguments[1]);
+            final Bag bag = Bag.getInstance();
+            final Rooms room = Rooms.getCurrentPlace();
+            final ListINamed<Things> bagObjects = bag.getObjects();
+            final Things putDowm = bagObjects.getINamed(arguments[1]);
             if (putDowm == null) {
-                answer += "Takový předmět nemáte v batohu.";
+                answer= "Takový předmět nemáte v batohu.";
             } else {
                 bag.removeObject(putDowm);
                 room.add(putDowm);
-                answer += "Položil(a) jste předmět: " + putDowm.getName();
+                answer = "Položil(a) jste předmět: " + putDowm.getName();
             }
         }
         return answer;

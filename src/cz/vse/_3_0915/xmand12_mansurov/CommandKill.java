@@ -29,23 +29,24 @@ public class CommandKill extends ACommand
      */
     @Override
     public String execute(String... arguments) {
-        String answer = "";
+        String answer;
         if (arguments.length < 2) {
-            answer += "Nebyl zadán objekt, na který se má aplikovat zadaná akce: " + arguments[0];
+            answer = "Nebyl zadán objekt, na který se má aplikovat zadaná akce: " + arguments[0];
         }
-        Rooms room = Rooms.getCurrentPlace();
-        ListINamed<Things> roomObjects = room.getObjects();
-        Things person = roomObjects.getINamed(arguments[1]);
+        final Rooms room = Rooms.getCurrentPlace();
+        final ListINamed<Things> roomObjects = room.getObjects();
+        final Things person = roomObjects.getINamed(arguments[1]);
         if (person.isAlive()) {
             if (person.getName().equalsIgnoreCase("vrah")) {
+                QuestManager.setStateTo("killKiller", true);
                 person.kill();
                 person.setWeight(1);
-                answer += "Zabil jste vraha a schoval jste jeho trup do keře";
+                answer = "Zabil jste vraha a schoval jste jeho trup do keře";
             } else {
-                answer += "Nemůžeš ho zabit";
+                answer = "Nemůžeš ho zabit";
             }
         } else {
-            answer += "Tento předmět není živý";
+            answer = "Tento předmět není živý";
         }
         return answer;
     }

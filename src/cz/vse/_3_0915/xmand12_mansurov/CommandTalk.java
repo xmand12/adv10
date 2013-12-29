@@ -32,9 +32,9 @@ public class CommandTalk extends ACommand
         if (arguments.length < 2) {
             answer = "Nebyl zadán objekt, na který se má aplikovat zadaná akce: " + arguments[0];
         } else {
-            Rooms room = Rooms.getCurrentPlace();
-            ListINamed<Things> roomObjects = room.getObjects();
-            Things person = roomObjects.getINamed(arguments[1]);
+            final Rooms room = Rooms.getCurrentPlace();
+            final ListINamed<Things> roomObjects = room.getObjects();
+            final Things person = roomObjects.getINamed(arguments[1]);
             if (person == null) {
                 answer = "Taková osoba tady není!";
             } else {
@@ -52,6 +52,13 @@ public class CommandTalk extends ACommand
         return answer;
     }
 
+   /**
+     * Metoda vraci odpved prodavace v zavislosti na nakolika kriteiich:
+     * jsetli mluvili s prodavacem
+     * jestli mate penize
+     * jestli uz kupili lod
+     * @return odpoved prodavace
+     */
     private String talkToSaler() {
         String answer;
         if (QuestManager.getStateOf("buyBoat")) {
@@ -91,26 +98,38 @@ public class CommandTalk extends ACommand
         return false;
     }
 
+    /**
+     * Metoda vraci odpved gubernatora v zavislosti na nakolika kriteiich:
+     * jsetli mluvili s gubernatorem
+     * jestli prinesli dukazy
+     * jestli vzali penize
+     * @return odpoved gubernatora
+     */
     private String talkToGubernator() {
         String answer = "";
+        Things killer = null;
+        Things money = null;
         if (QuestManager.getStateOf("frstDlgWthGbr")) {
             Rooms currRoom = Rooms.getCurrentPlace();
             for (Things object : currRoom.getObjects()) {
                 if (object.getName().equalsIgnoreCase("vrah")) {
-                    if (Rooms.getCurrentPlace().getName().equalsIgnoreCase("10000")) {
-
-                    answer = "Gubernátor poděkoval vám a řekl,že vaše odměna na vás už"
-                            + "\ndávno čeká na jeho stole, a že teď můžete ji vzít.";}
-                    else{
-                        answer = "Nemám na Vás čas.Přijděte později";
-                    }
-                } else {
-                    answer = "Přiďte, když budete mít nějaké důkazy.";
+                    killer = object;
                 }
+                if (object.getName().equalsIgnoreCase("10000")) {
+                    money = object;
+                }
+            }
+            if ((money == null)) {
+                answer = "Nemám na Vás čas.Přijděte později";
+            } else if ((killer == null) && (money != null)) {
+                answer = "Přiďte, když budete mít nějaké důkazy.";
+            } else if ((killer != null) && (money != null)) {
+                answer = "Gubernátor poděkoval vám a řekl,že vaše odměna na vás už"
+                        + "\ndávno čeká na jeho stole, a že teď můžete ji vzít.";
             }
         } else {
             QuestManager.setStateTo("frstDlgWthGbr", true);
-            answer  = "Zeptal jste gubernátora, nemá-li nějaké zadání. Gubernátor řekl,\n"
+            answer = "Zeptal jste gubernátora, nemá-li nějaké zadání. Gubernátor řekl,\n"
                     + "že se ve džunglích vyskituje vrah, který terorizuje lidé.\n"
                     + " Rǐkáte, že zabil jste ho. Ale gubernátor tomu neveří.\n"
                     + "Ptá se po důkazech. Odpověděl jste, že nějaké dostanete.";
