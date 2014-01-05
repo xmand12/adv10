@@ -35,10 +35,10 @@ class CommandStart extends ACommand
         } else{
             Game.getInstance().start();
             Rooms.initialize();
-            answer  = "Vy jste známý španělský korsar.\n "
-                    + "Váš tatínek před smrti dal vám mapu, ve které je\n "
-                    + "označené místo, kde se nachází poklad.\n"
-                    + "Kromě toho dal vám klíč od něho.";
+            answer  = "Vy jste známý španělský korzár. Jednou k Vám přišel duch vašeho otce, \n"
+                    + "a řekl, jdete do jeskyně, která se nachází v blízkosti města. \n"
+                    + "Když jste přišel do jeskyně, váš otec ti dal mapu, v které se ukazuje, \n"
+                    + "kde je jeho poklad a dal Vám klíč od truhlice.";
         }
         return answer;
     }

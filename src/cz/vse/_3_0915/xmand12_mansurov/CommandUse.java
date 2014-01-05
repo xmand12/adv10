@@ -46,6 +46,7 @@ public class CommandUse extends ACommand
      * jestli nachazite v mistnosti "vodopad"
      * jestli pouzivate predmet "lopata"
      * jestli pouzivate predmet "klic"
+     * jestli pouzivate predmet "mapa"
      * @param item predmet, ktery pouzivate
      * @return odpoved na dany prikaz
      */
@@ -65,6 +66,10 @@ public class CommandUse extends ACommand
                 Bag.getInstance().removeObject(item);
                 answer = "Použil jste klíč a odemknul jste truhlice.";
             }
+
+        } else if (item.getName().equalsIgnoreCase("mapa")) {
+            answer = "Mapa ukazuje místo, kde je poklad pohřben.\n "
+                    + "Je to malý ostrov, který má vodopád a tam pohřben poklad";
         } else {
             answer = "Tenhle předmět nemůžete použit";
         }
